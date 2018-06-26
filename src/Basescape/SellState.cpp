@@ -46,6 +46,7 @@
 #include "../Engine/Timer.h"
 #include "../Engine/Options.h"
 #include "../Mod/RuleInterface.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -469,6 +470,8 @@ void SellState::btnOkClick(Action *)
 		}
 	}
 	_game->popState();
+
+	StateWriter::save();
 }
 
 /**

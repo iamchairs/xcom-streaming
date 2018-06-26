@@ -44,6 +44,7 @@
 #include "../Battlescape/BattlescapeGenerator.h"
 #include "../Savegame/SavedBattleGame.h"
 #include "../Mod/RuleInterface.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -242,6 +243,8 @@ void CraftEquipmentState::think()
 void CraftEquipmentState::btnOkClick(Action *)
 {
 	_game->popState();
+
+	StateWriter::save();
 }
 
 /**

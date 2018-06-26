@@ -730,6 +730,8 @@ GameDifficulty SavedGame::getDifficulty() const
 void SavedGame::setDifficulty(GameDifficulty difficulty)
 {
 	_difficulty = difficulty;
+
+	StateWriter::save();
 }
 
 /**
@@ -778,6 +780,8 @@ bool SavedGame::isIronman() const
 void SavedGame::setIronman(bool ironman)
 {
 	_ironman = ironman;
+
+	StateWriter::save();
 }
 
 /**
@@ -895,6 +899,8 @@ void SavedGame::monthlyFunding()
 		_funds.erase(_funds.begin());
 	if (_maintenance.size() > 12)
 		_maintenance.erase(_maintenance.begin());
+
+	StateWriter::save();
 }
 
 /**
@@ -1087,6 +1093,8 @@ void SavedGame::setBattleGame(SavedBattleGame *battleGame)
 {
 	delete _battleGame;
 	_battleGame = battleGame;
+
+	StateWriter::save();
 }
 
 /**
@@ -1096,6 +1104,7 @@ void SavedGame::setBattleGame(SavedBattleGame *battleGame)
 void SavedGame::addFinishedResearchSimple(const RuleResearch * research)
 {
 	_discovered.push_back(research);
+
 	StateWriter::save();
 }
 
@@ -1788,6 +1797,8 @@ bool SavedGame::getWarned() const
 void SavedGame::setWarned(bool warned)
 {
 	_warned = warned;
+
+	StateWriter::save();
 }
 
 /** @brief Check if a point is contained in a region.
@@ -1895,6 +1906,8 @@ void SavedGame::setGraphFinanceToggles(const std::string &value)
 void SavedGame::addMonth()
 {
 	++_monthsPassed;
+
+	StateWriter::save();
 }
 
 /*

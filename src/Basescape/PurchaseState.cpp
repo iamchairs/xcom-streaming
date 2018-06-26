@@ -45,6 +45,8 @@
 #include "../Mod/RuleSoldier.h"
 #include "../Mod/RuleCraftWeapon.h"
 #include "../Mod/Armor.h"
+#include "../Api/StateWriter.h"
+
 
 namespace OpenXcom
 {
@@ -376,6 +378,8 @@ void PurchaseState::btnOkClick(Action *)
 		}
 	}
 	_game->popState();
+
+	StateWriter::save();
 }
 
 /**

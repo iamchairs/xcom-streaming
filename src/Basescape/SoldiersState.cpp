@@ -30,6 +30,7 @@
 #include "../Savegame/Soldier.h"
 #include "SoldierInfoState.h"
 #include "SoldierMemorialState.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -148,6 +149,8 @@ void SoldiersState::init()
 void SoldiersState::btnOkClick(Action *)
 {
 	_game->popState();
+
+	StateWriter::save();
 }
 
 /**

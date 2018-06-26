@@ -33,6 +33,7 @@
 #include "../Savegame/Base.h"
 #include "../Savegame/ItemContainer.h"
 #include "../Mod/RuleSoldier.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -158,6 +159,8 @@ void SoldierArmorState::lstArmorClick(Action *)
 	_save->setLastSelectedArmor(_armors[_lstArmor->getSelectedRow()]->getType());
 
 	_game->popState();
+
+	StateWriter::save();
 }
 
 }
