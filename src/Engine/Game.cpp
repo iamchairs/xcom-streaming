@@ -38,6 +38,7 @@
 #include "CrossPlatform.h"
 #include "FileMap.h"
 #include "../Menu/TestState.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -423,6 +424,8 @@ void Game::pushState(State *state)
 {
 	_states.push_back(state);
 	_init = false;
+
+	StateWriter::save();
 }
 
 /**
@@ -436,6 +439,8 @@ void Game::popState()
 	_deleted.push_back(_states.back());
 	_states.pop_back();
 	_init = false;
+
+	StateWriter::save();
 }
 
 /**

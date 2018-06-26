@@ -71,6 +71,7 @@
 #include "../Savegame/BattleItem.h"
 #include "../Savegame/Ufo.h"
 #include "../Mod/RuleInterface.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -553,6 +554,8 @@ void BattlescapeState::init()
 			_game->pushState(new SaveGameState(OPT_BATTLESCAPE, SAVE_AUTO_BATTLESCAPE, _palette));
 		}
 	}
+
+	StateWriter::save();
 }
 
 /**

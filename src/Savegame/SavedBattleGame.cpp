@@ -10,7 +10,7 @@
  *
  * OpenXcom is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See theStateWriter::save();
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -40,6 +40,7 @@
 #include "../Engine/Logger.h"
 #include "SerializationHelper.h"
 #include "../Mod/RuleItem.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -338,6 +339,8 @@ void SavedBattleGame::load(const YAML::Node &node, Mod *mod, SavedGame* savedGam
 	_turnLimit = node["turnLimit"].as<int>(_turnLimit);
 	_chronoTrigger = ChronoTrigger(node["chronoTrigger"].as<int>(_chronoTrigger));
 	_cheatTurn = node["cheatTurn"].as<int>(_cheatTurn);
+
+	StateWriter::save();
 }
 
 /**
@@ -472,6 +475,8 @@ YAML::Node SavedBattleGame::save() const
 	node["turnLimit"] = _turnLimit;
 	node["chronoTrigger"] = int(_chronoTrigger);
 	node["cheatTurn"] = _cheatTurn;
+
+	StateWriter::save();
 
 	return node;
 }
@@ -642,6 +647,8 @@ BattleUnit *SavedBattleGame::getSelectedUnit() const
 void SavedBattleGame::setSelectedUnit(BattleUnit *unit)
 {
 	_selectedUnit = unit;
+
+	StateWriter::save();
 }
 
 /**
@@ -734,6 +741,9 @@ BattleUnit *SavedBattleGame::selectPlayerUnit(int dir, bool checkReselect, bool 
 	while (!(*i)->isSelectable(_side, checkReselect, checkInventory));
 
 	_selectedUnit = (*i);
+
+	StateWriter::save();
+
 	return _selectedUnit;
 }
 
@@ -912,6 +922,8 @@ void SavedBattleGame::endTurn()
 
 	if (_side != FACTION_PLAYER)
 		selectNextPlayerUnit();
+
+	StateWriter::save();
 }
 
 /**

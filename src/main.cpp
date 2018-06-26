@@ -23,6 +23,7 @@
 #include "Engine/Game.h"
 #include "Engine/Options.h"
 #include "Menu/StartState.h"
+#include "StateWriter.h"
 
 /** @mainpage
  * @author OpenXcom Developers
@@ -115,8 +116,13 @@ int main(int argc, char *argv[])
 	Options::baseXResolution = Options::displayWidth;
 	Options::baseYResolution = Options::displayHeight;
 
+	StateWriter::save();
+
 	game = new Game(title.str());
 	State::setGamePtr(game);
+
+	StateWriter::setGame(game);
+
 	game->setState(new StartState);
 	game->run();
 

@@ -53,6 +53,7 @@
 #include "../Mod/RuleRegion.h"
 #include "MissionStatistics.h"
 #include "SoldierDeath.h"
+#include "../Api/StateWriter.h"
 
 namespace OpenXcom
 {
@@ -108,6 +109,8 @@ SavedGame::SavedGame() : _difficulty(DIFF_BEGINNER), _end(END_NONE), _ironman(fa
 	_incomes.push_back(0);
 	_expenditures.push_back(0);
 	_lastselectedArmor="STR_NONE_UC";
+
+	StateWriter::save();
 }
 
 /**
@@ -560,6 +563,8 @@ void SavedGame::load(const std::string &filename, Mod *mod)
 		_battleGame = new SavedBattleGame();
 		_battleGame->load(battle, mod, this);
 	}
+
+	StateWriter::save();
 }
 
 /**
@@ -687,6 +692,8 @@ void SavedGame::save(const std::string &filename) const
 	out << node;
 	sav << out.c_str();
 	sav.close();
+
+	StateWriter::save();
 }
 
 /**
@@ -806,6 +813,8 @@ void SavedGame::setFunds(int64_t funds)
 		_incomes.back() += funds - _funds.back();
 	}
 	_funds.back() = funds;
+
+	StateWriter::save();
 }
 
 /**
@@ -1087,6 +1096,7 @@ void SavedGame::setBattleGame(SavedBattleGame *battleGame)
 void SavedGame::addFinishedResearchSimple(const RuleResearch * research)
 {
 	_discovered.push_back(research);
+	StateWriter::save();
 }
 
 /**
@@ -1201,6 +1211,8 @@ void SavedGame::addFinishedResearch(const RuleResearch * research, const Mod * m
 		// 4. process remaining items in the queue
 		++currentQueueIndex;
 	}
+
+	StateWriter::save();
 }
 
 /**
@@ -1582,6 +1594,8 @@ bool SavedGame::handlePromotions(std::vector<Soldier*> &participants)
 			}
 		}
 	}
+
+	StateWriter::save();
 
 	return (soldiersPromoted > 0);
 }
@@ -1992,6 +2006,9 @@ std::vector<Soldier*>::iterator SavedGame::killSoldier(Soldier *soldier, BattleU
 			}
 		}
 	}
+
+	StateWriter::save();
+
 	return j;
 }
 
