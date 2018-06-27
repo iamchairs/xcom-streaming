@@ -47,11 +47,18 @@ namespace OpenXcom
 					out << YAML::Value << "battle";
 
 					BattleUnit *selectedUnit = savedBattle->getSelectedUnit();
-					Soldier *selectedSoldier = selectedUnit->getGeoscapeSoldier();
-					wstring selectedUnitName = selectedSoldier->getName();
 
-					out << YAML::Key << "selectedUnit";
-					out << YAML::Value << Language::wstrToUtf8(selectedUnitName);
+					if (selectedUnit && selectedUnit->getFaction() == FACTION_PLAYER) {
+						Soldier *selectedSoldier = selectedUnit->getGeoscapeSoldier();
+
+						if (selectedSoldier) {
+							wstring selectedUnitName = selectedSoldier->getName();
+
+							out << YAML::Key << "selectedUnit";
+							out << YAML::Value << Language::wstrToUtf8(selectedUnitName);
+						}
+						
+					}
 
 					// units
 
@@ -60,6 +67,13 @@ namespace OpenXcom
 					out << YAML::BeginSeq;
 
 					vector<BattleUnit*> *units = savedBattle->getUnits();
+
+					// hack
+					// when first starting a mission we get to this point with a single soldier
+					// making the lowest ranked unit first
+					if (units->size() == 1) {
+						return;
+					}
 
 					for (unsigned i = 0; i < units->size(); i++) {
 						BattleUnit *unit = units->at(i);

@@ -340,7 +340,10 @@ void SavedBattleGame::load(const YAML::Node &node, Mod *mod, SavedGame* savedGam
 	_chronoTrigger = ChronoTrigger(node["chronoTrigger"].as<int>(_chronoTrigger));
 	_cheatTurn = node["cheatTurn"].as<int>(_cheatTurn);
 
-	StateWriter::save();
+	if (_side == FACTION_PLAYER)
+	{
+		StateWriter::save();
+	}
 }
 
 /**
@@ -476,7 +479,10 @@ YAML::Node SavedBattleGame::save() const
 	node["chronoTrigger"] = int(_chronoTrigger);
 	node["cheatTurn"] = _cheatTurn;
 
-	StateWriter::save();
+	if (_side == FACTION_PLAYER)
+	{
+		StateWriter::save();
+	}
 
 	return node;
 }
@@ -648,7 +654,10 @@ void SavedBattleGame::setSelectedUnit(BattleUnit *unit)
 {
 	_selectedUnit = unit;
 
-	StateWriter::save();
+	if (_side == FACTION_PLAYER)
+	{
+		StateWriter::save();
+	}
 }
 
 /**
@@ -742,7 +751,10 @@ BattleUnit *SavedBattleGame::selectPlayerUnit(int dir, bool checkReselect, bool 
 
 	_selectedUnit = (*i);
 
-	StateWriter::save();
+	if (_side == FACTION_PLAYER)
+	{
+		StateWriter::save();
+	}
 
 	return _selectedUnit;
 }
@@ -922,8 +934,6 @@ void SavedBattleGame::endTurn()
 
 	if (_side != FACTION_PLAYER)
 		selectNextPlayerUnit();
-
-	StateWriter::save();
 }
 
 /**
